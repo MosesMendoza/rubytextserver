@@ -2,8 +2,9 @@ require 'spec_helper'
 require 'ruby_textserver'
 
 describe RubyTextserver do
-  describe '#body_from_request' do
-    let(:server) { RubyTextserver.new }
+  let(:server) { RubyTextserver.new }
+
+  describe "#body_from_request" do
     let(:body) { StringIO.new("foo") }
     let(:request) { double('request', :body => body) }
     # use a StringIO to simulate the IO object of a request body
@@ -17,6 +18,12 @@ describe RubyTextserver do
 
     it "should return the text body of the request" do
       expect(server.body_from_request(request)).to eq("foo")
+    end
+  end
+
+  describe "#remove_integers" do
+    it "should return the given string without integers" do
+      expect(server.remove_integers("abc123def099")).to eq("abcdef")
     end
   end
 end
