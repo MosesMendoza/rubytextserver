@@ -1,5 +1,3 @@
-require 'sinatra'
-
 class RubyTextserver
   # @return [String] the request body as a string
   def body_from_request(request)
