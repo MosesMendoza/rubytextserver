@@ -1,8 +1,16 @@
+# A class to handle the parsing of text from a request
+
 class RubyTextserver
   # @return [String] the request body as a string
   def body_from_request(request)
     request.body.rewind # in case this has been read before
     request.body.read
+  end
+
+  # @param [String] a comma-separated list of URLs
+  # @return [Array] an array of URL strings
+  def urls_from_text(text)
+    text.split(',')
   end
 
   # @param [String] a text string
