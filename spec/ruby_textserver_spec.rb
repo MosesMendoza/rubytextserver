@@ -34,12 +34,4 @@ describe RubyTextserver do
       expect(server.uniquify(string)).to eq("\u2603ab!")
     end
   end
-
-  describe '#urls_from_text' do
-    it "should return an array of URL strings from a text body" do
-      url_string = "http://foo.bar,http://baz.qux"
-      expect(server.urls_from_text(url_string)).to eq(["http://foo.bar", "http://baz.qux"])
-    end
-  end
-
 end

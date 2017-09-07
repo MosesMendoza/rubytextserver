@@ -7,12 +7,6 @@ class RubyTextserver
     request.body.read
   end
 
-  # @param [String] a comma-separated list of URLs
-  # @return [Array] an array of URL strings
-  def urls_from_text(text)
-    text.split(',')
-  end
-
   # @param [String] a text string
   # @return [String] the same string with integers removed
   def remove_integers(text)
