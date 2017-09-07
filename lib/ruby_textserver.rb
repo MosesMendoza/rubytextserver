@@ -13,8 +13,16 @@ class RubyTextserver
     # use the utf-8 compatible character-class rather than posix escape
     text.gsub(/[[:digit:]]/, '')
   end
-#
-#  def uniquify(body)
-#
-#  end
+
+  # @param [String] a text string
+  # @return [String] the supplied text string with only a single instance of
+  #   any character in the supplied string
+  def uniquify(body)
+    # Use a set to establish the character string
+    set = Set.new(body.chars)
+    # sets don't have join but arrays do. this transformation is based on the
+    # assumption that it is faster to convert to an array and join than reduce
+    # over the set appending to the new string.
+    set.to_a.join
+  end
 end

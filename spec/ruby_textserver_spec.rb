@@ -26,4 +26,12 @@ describe RubyTextserver do
       expect(server.remove_integers("abc123def099")).to eq("abcdef")
     end
   end
+
+  describe "#uniquify" do
+    it "should remove multiple instances of characters from the supplied string" do
+      # might as well get some utf-8 exposure while we're at it
+      string = "\u2603aaabb\u2603!!"
+      expect(server.uniquify(string)).to eq("\u2603ab!")
+    end
+  end
 end
