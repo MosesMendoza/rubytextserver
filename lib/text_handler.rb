@@ -8,7 +8,7 @@ class TextHandler
   def process(request)
     urls = body_from_request(request)
     text = TextClient.new.retrieve(urls)
-    TextTransformer.tranform(text)
+    TextTransformer.transform(text)
   end
 
   # @return [String] the request body as a string
