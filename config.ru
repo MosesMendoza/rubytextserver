@@ -1,2 +1,2 @@
 require './app.rb'
-run RubyTextserver
+run RubyTextServer
