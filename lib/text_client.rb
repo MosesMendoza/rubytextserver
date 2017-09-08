@@ -2,7 +2,14 @@
 require 'net/http'
 
 class TextClient
-    # @param [String] a comma-separated list of URLs
+  # Single entry point for client processing of text representing URLs and
+  # returning the aggregate content at those URLs
+  def retrieve(text)
+    urls = urls_from_text(text)
+    retrieve_text_from_urls(urls)
+  end
+
+  # @param [String] a comma-separated list of URLs
   # @return [Array] an array of URL strings
   def urls_from_text(text)
     text.split(',')

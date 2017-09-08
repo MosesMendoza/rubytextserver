@@ -7,6 +7,6 @@ require 'text_handler'
 # which actually interfaces with the libs 
 class RubyTextServer < Sinatra::Base
   post '/' do
-    TextHandler.new.body_from_request(request)
+    TextHandler.new.process(request)
   end
 end

@@ -2,8 +2,14 @@
 
 class TextTransformer
   class << self
-    # @param [String] a text string
-    # @return [String] the same string with integers removed
+    # A single entry point that performs all text transformation logic we know
+    # about
+    def transform(text)
+      remove_integers(uniquify(text))
+    end
+
+    # @param [String] a text string @return [String] the same string with
+    # integers removed
     def remove_integers(text)
       # use the utf-8 compatible character-class rather than posix escape
       text.gsub(/[[:digit:]]/, '')
