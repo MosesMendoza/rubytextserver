@@ -1,5 +1,6 @@
 # A class to retrieve text from urls
 require 'net/http'
+require 'concurrent'
 
 class TextClient
   # Single entry point for client processing of text representing URLs and
@@ -19,24 +20,23 @@ class TextClient
   # @param [String] a URL to GET
   # @return [String] the string content at that URL
   def retrieve_text(url)
-    Net::HTTP.get(URI(url))
+    # Net::HTTP is terribly broken w/rt encoding
+    text = Net::HTTP.get(URI(url))
+    # in case we get a nil response or something odd, only force encoding if
+    # this is an object that will take it
+    text.respond_to?(:force_encoding) ? text.force_encoding(Encoding::UTF_8) : text
   end
 
-  # We can parallelize the retrieval from multiple URLs and aggregate the response using pipes
   def retrieve_text_from_urls(urls)
-    reader, writer = IO.pipe
-    begin
-      urls.each do |url|
-        Thread.new do
-          text = retrieve_text(url)
-          writer.write(text)
-        end.join
-      end
-    ensure
-      writer.close
+    # We use the agent implementation from concurrent-ruby, inspired by other
+    # languages with built-in concurrency primitives. This is a type for shared
+    # asynchronous mutable state, modifications to which will be interleaved
+    # based on threads completing.
+    agent = Concurrent::Agent.new("")
+    urls.each do |url|
+      agent.send { |contents| contents + retrieve_text(url) }
     end
-    aggregate_content = reader.read
-    reader.close
-    aggregate_content
+    agent.await
+    agent.value
   end
 end

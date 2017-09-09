@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
+gem 'concurrent-ruby'
 gem 'sinatra'
-gem 'thin'
+gem 'puma'
 
 group :test do
   gem 'rspec'
