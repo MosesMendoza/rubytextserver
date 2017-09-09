@@ -7,7 +7,7 @@ class TextHandler
   # Take an incoming request and perform all the necessary processing on it
   def process(request)
     urls = body_from_request(request)
-    text = TextClient.new.retrieve(urls)
+    text = TextClient.retrieve(urls)
     TextTransformer.transform(text)
   end
 
